@@ -1,5 +1,6 @@
 node_modules/
 SQL/
+bk/
 package-lock.json
 package.json
 question.cvs
