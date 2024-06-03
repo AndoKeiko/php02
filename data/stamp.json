@@ -1,0 +1,39 @@
+{
+  "stamp": [
+    {
+      "id": "0",
+      "value": "smile",
+      "icon": "<i class='bi bi-emoji-smile'></i>"
+    },
+    {
+      "id": "1",
+      "value": "angry",
+      "icon": "<i class='bi bi-emoji-angry'></i>"
+    },
+    {
+      "id": "2",
+      "value": "dizzy",
+      "icon": "<i class='bi bi-emoji-dizzy'></i>"
+    },
+    {
+      "id": "3",
+      "value": "toilet",
+      "icon": "<i class='fa-solid fa-toilet'></i>"
+    },
+    {
+      "id": "4",
+      "value": "beer",
+      "icon": "<i class='fa-solid fa-beer-mug-empty'></i></i>"
+    },
+    {
+      "id": "5",
+      "value": "moon",
+      "icon": "<i class='bi bi-moon'></i></i>"
+    },
+    {
+      "id": "6",
+      "value": "baseball",
+      "icon": "<i class='fa-solid fa-baseball'></i>"
+    }
+  ]
+}

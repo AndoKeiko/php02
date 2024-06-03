@@ -1,0 +1,17 @@
+node_modules/
+SQL/
+package-lock.json
+package.json
+question.cvs
+tailwind.config.js
+postcss.config.js
+user2.php
+user_insert2.php
+touroku.php
+test.txt
+select.php
+register.php
+resd.php
+insert.php
+first.php
+first_act.php
