@@ -94,7 +94,7 @@ $pdo = db_conn(); ?>
             <div class="flex"><label class="label">体脂肪率：</label><input type="text" name="fat" class="input_text short_box"></div>
             <div class="flex"><label class="label">歩数：</label><input type="text" name="step" class="input_text short_box">歩</div>
             <div class="flex"><label class="label">スタンプ：</label>
-            <div class="chk_box">            
+            <div class="chk_box">
             <?php
               $filename = './data/stamp.json';
               $jsonContent = file_get_contents($filename);
@@ -102,13 +102,13 @@ $pdo = db_conn(); ?>
               $array = json_decode($jsonContent, true);
               // var_dump($array);
               ?>
-                <?php foreach ($array as $a) { 
+                <?php foreach ($array as $a) {
                   //  var_dump($a);
                   foreach ($a as $a2) {
-                    // var_dump($a2["id"]); ?>                    
+                    // var_dump($a2["id"]); ?>
                     <input type="checkbox" name="stamp[]" id="st[<?=$a2['id']?>]" value="<?=$a2['value']?>" />
                     <label for="st[<?=$a2['id']?>]" class="chk_box-icon"><?=$a2['icon']?></label>
-                  </label>        
+                  </label>
                 <?php } } ?>
             </div>
             </div>
