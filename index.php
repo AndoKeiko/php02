@@ -89,24 +89,25 @@ $pdo = db_conn(); ?>
             <legend>
               <h1 class="h1">記録</h1>
             </legend>
-            <div class="flex"><label class="label">日付：</label><input type="date" name="input_date" class="input_text" value="<?= date('Y-m-d') ?>"></div>
-            <div class="flex"><label class="label">体重：</label><input type="text" name="weight" class="input_text short_box">kg</div>
-            <div class="flex"><label class="label">体脂肪率：</label><input type="text" name="fat" class="input_text short_box"></div>
-            <div class="flex"><label class="label">歩数：</label><input type="text" name="step" class="input_text short_box">歩</div>
-            <div class="flex"><label class="label">スタンプ：</label>
+            <div class="flex items-center"><label class="label">日付：</label><input type="date" name="input_date" class="input_text" value="<?= date('Y-m-d') ?>"></div>
+            <!-- <div class="flex items-center"><label class="label">食事：</label><div id="calorie_btn" class="p-3 px-0">お食事入力</div></div>-->
+            <div class="flex items-center"><label class="label">体重：</label><input type="text" name="weight" class="input_text short_box">kg</div>
+            <div class="flex items-center"><label class="label">体脂肪率：</label><input type="text" name="fat" class="input_text short_box"></div>
+            <div class="flex items-center"><label class="label">歩数：</label><input type="text" name="step" class="input_text short_box">歩</div>
+            <div class="flex items-center"><label class="label">スタンプ：</label>
             <div class="chk_box">
             <?php
               $filename = './data/stamp.json';
               $jsonContent = file_get_contents($filename);
               // $array = json_encode(json_decode($jsonContent));
               $array = json_decode($jsonContent, true);
-              // var_dump($array);
+              //var_dump($array);
               ?>
                 <?php foreach ($array as $a) {
                   //  var_dump($a);
                   foreach ($a as $a2) {
                     // var_dump($a2["id"]); ?>
-                    <input type="checkbox" name="stamp[]" id="st[<?=$a2['id']?>]" value="<?=$a2['value']?>" />
+                    <input type="checkbox" name="stamp[]" id="st[<?=$a2['id']?>]" value="<?=$a2['id']?>" />
                     <label for="st[<?=$a2['id']?>]" class="chk_box-icon"><?=$a2['icon']?></label>
                   </label>
                 <?php } } ?>
@@ -122,11 +123,12 @@ $pdo = db_conn(); ?>
       <?php
       if ($values) {
       ?>
-        <div class="diet_record_table w-[70%] mx-auto">
+        <div class="diet_record_table w-[100%] mx-auto">
           <table class="table-auto w-full">
             <thead className="sticky top-0 z-10 ">
               <tr>
                 <th class="px-4 py-2 border bg-red-300">日付</th>
+                <!-- <th class="px-4 py-2 border bg-red-300">総カロリー</th> -->
                 <th class="px-4 py-2 border bg-red-300">体重</th>
                 <th class="px-4 py-2 border bg-red-300">歩数</th>
                 <th class="px-4 py-2 border bg-red-300">体脂肪</th>
@@ -144,6 +146,7 @@ $pdo = db_conn(); ?>
               <tr>
                 <td class="px-4 py-2 border"><?= $v["input_date"] ?></td>
                 <td class="px-4 py-2 border"><?= $v["weight"] ?> kg</td>
+                <td class="px-4 py-2 border"><?= $v["weight"] ?></td>
                 <td class="px-4 py-2 border"><?= $v["step"] ?> 歩</td>
                 <td class="px-4 py-2 border"><?= $v["fat"] ?></td>
                 <td class="px-4 py-2 border">
@@ -151,7 +154,7 @@ $pdo = db_conn(); ?>
                 $stamps = explode(',', $v['stamp']);
                 foreach ($array as $a) {
                    foreach ($a as $a2) {
-                    if (in_array($a2['value'], $stamps)) {
+                    if (in_array($a2['id'], $stamps)) {
                       echo $a2['icon'];
                     }
                   }
@@ -170,6 +173,7 @@ $pdo = db_conn(); ?>
                 $step .= $c . '"' . $v["step"] . '"';
               }
               $goal = $v["goal"];
+              // echo $goal;
             }
             ?>
           </table>
@@ -197,6 +201,7 @@ $pdo = db_conn(); ?>
     const step = [<?= $step ?>];
     const input_date = [<?= $input_date ?>];
     const goal = <?= $goal ?>;
+    const allWeights = [...weight, goal];
     // console.log(step);
     // console.log(weight);
     const ctx = document.getElementById('myChart').getContext('2d');
@@ -254,8 +259,8 @@ $pdo = db_conn(); ?>
             type: 'linear',
             position: 'left',
             beginAtZero: true,
-            min: Math.min(...[<?= $weight ?>]) - 5,
-            max: Math.max(...[<?= $weight ?>]) + 5,
+            min: Math.min(...allWeights) - 5,
+            max: Math.max(...allWeights) + 5,
             stepSize: 1,
             title: {
               display: true,
