@@ -1,6 +1,5 @@
-$("#calorie").click(function (e) { 
-  // e.preventDefault();
-  html = '<div id="food_box">';
-  html += '</div>';
-  $("#calorie").append(html);
+$("#select_delete_btn").click(function (e) {
+  alert("押した");
+  e.preventDefault();
+  $("#delete_list").submit();
 });

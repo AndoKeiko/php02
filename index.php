@@ -74,7 +74,6 @@ $pdo = db_conn(); ?>
 
       $values = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-
       foreach ($values as $value) {
         $lid = $value["lid"];
       }
@@ -83,7 +82,7 @@ $pdo = db_conn(); ?>
     ?>
 
       <!-- Main[Start] -->
-      <form method="post" action="insert_diet.php">
+      <form method="post" name="form_list" action="insert_diet.php">
         <div class="login_box w-[70%] mx-auto">
           <fieldset>
             <legend>
@@ -101,7 +100,7 @@ $pdo = db_conn(); ?>
               $jsonContent = file_get_contents($filename);
               // $array = json_encode(json_decode($jsonContent));
               $array = json_decode($jsonContent, true);
-              //var_dump($array);
+              // var_dump($array);
               ?>
                 <?php foreach ($array as $a) {
                   //  var_dump($a);
@@ -122,11 +121,15 @@ $pdo = db_conn(); ?>
       <!-- Main[End] -->
       <?php
       if ($values) {
+        // var_dump($values);
       ?>
         <div class="diet_record_table w-[100%] mx-auto">
+          <form action="delete.php" id="delete_list" method="post">
           <table class="table-auto w-full">
             <thead className="sticky top-0 z-10 ">
               <tr>
+                <th>&nbsp;&nbsp;</th>
+                <th><a id="select_delete_btn"><i class="bi bi-trash3"></i></a></th>
                 <th class="px-4 py-2 border bg-red-300">日付</th>
                 <!-- <th class="px-4 py-2 border bg-red-300">総カロリー</th> -->
                 <th class="px-4 py-2 border bg-red-300">体重</th>
@@ -134,6 +137,7 @@ $pdo = db_conn(); ?>
                 <th class="px-4 py-2 border bg-red-300">体脂肪</th>
                 <th class="px-4 py-2 border bg-red-300">スタンプ</th>
                 <th class="px-4 py-2 border bg-red-300">メモ</th>
+                <th>更新</th>
               </tr>
             </thead>
             <?php
@@ -144,12 +148,13 @@ $pdo = db_conn(); ?>
             // var_dump($values);
             foreach ($values as $index => $v) { ?>
               <tr>
+                <td><a href="delete.php?id=<?=$v["id"]?>&did=<?=$v["did"]?>?>"><i class="bi bi-trash3"></i></a></td>
+                <td><input type="checkbox" name="trash[]" id="<?=$v["did"]?>" value="<?= $v['did'] ?>" class="trash_chk text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
                 <td class="px-4 py-2 border"><?= $v["input_date"] ?></td>
-                <td class="px-4 py-2 border"><?= $v["weight"] ?> kg</td>
                 <td class="px-4 py-2 border"><?= $v["weight"] ?></td>
                 <td class="px-4 py-2 border"><?= $v["step"] ?> 歩</td>
                 <td class="px-4 py-2 border"><?= $v["fat"] ?></td>
-                <td class="px-4 py-2 border">
+                <td class="px-4 py-2 border stamp_box">
                 <?php
                 $stamps = explode(',', $v['stamp']);
                 foreach ($array as $a) {
@@ -161,7 +166,8 @@ $pdo = db_conn(); ?>
                 }
                 ?>
                 </td>
-                <td class="px-4 py-2 border"><?= $v["memo"] ?></td>
+                <td class="px-4 py-2 border memo"><?= $v["memo"] ?></td>
+                <td class="px-4 py-2 border"><a href="detail.php?id=<?=$v["id"]?>&did=<?=$v["did"]?>"><i class="bi bi-arrow-counterclockwise"></i></a></td>
               </tr>
             <?php if ($index == 0) {
                 $input_date .= '"' . $v["input_date"] . '"';
@@ -177,6 +183,7 @@ $pdo = db_conn(); ?>
             }
             ?>
           </table>
+          </form>
         </div>
         <div class="mt-16">
           <h2 class="text-center mb-8 text-[18px]">目標体重まで：
@@ -189,12 +196,14 @@ $pdo = db_conn(); ?>
             echo $goal - $new_weight . "キロです";
             // var_dump($goal);
             // var_dump($weight);
-            // var_dump($new_weight);          
+            // ormar_dump($new_weight);          
           ?></h2>
           <canvas id="myChart"></canvas>
         </div>
 
   </main>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="./js/app.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     const weight = [<?= $weight ?>];

@@ -224,15 +224,27 @@ legend {
 }
 .diet_record_table {
   max-height: 20rem;
-  overflow-y: auto;
   margin-bottom: 3rem;
   border-radius: 0.8em;
   margin-top: 5rem;
+
+  overflow: auto;
+  position: relative;
+}
+.diet_record_table thead {
+  position: sticky;
 }
 .diet_record_table th {
   background: #e7ecf2;
   border: 2px solid #e7ecf2;
   color: #394669;
+  text-align: center;
+  white-space: nowrap;
+  font-size: .8rem;
+}
+.diet_record_table table {
+  width: 100%;
+
 }
 .diet_record_table th:nth-child(1) {
   border-top-left-radius: 0.5rem;
@@ -243,7 +255,10 @@ legend {
   border-top-right-radius: 0.5rem;
 }
 .diet_record_table td {
-  border: 2px solid #e7ecf2;
+  border: 1px solid #e7ecf2;
+  white-space: nowrap;
+  padding: .5rem;
+  text-align: center;
 }
 .diet_record_table td:nth-child(1) {
   border-bottom-left-radius: 0.5rem;
@@ -253,9 +268,16 @@ legend {
 .diet_record_table td:nth-child(3) {
   border-bottom-right-radius: 0.5rem;
 }
-.diet_record_table td i {
+.diet_record_table .stamp_box i {
   margin-left: .5rem;
   display: inline-block;
+}
+.diet_record_table .memo {
+  word-break: break-all;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 input[type='checkbox'] {
   display: none;
@@ -264,4 +286,10 @@ input[type='checkbox'] {
   background-color: #477ee6;
   color: white;
   border-color: #007BFF;
+}
+input[type='checkbox'].trash_chk {
+  width: .8rem;
+  height: .8rem;
+  border-color: #d1d5db;
+  display: inline-block;
 }
